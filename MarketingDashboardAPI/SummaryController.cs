@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
 using System;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,6 +18,7 @@ namespace MarketingDashboardAPI
     public class SummaryController : Controller
     {
         // GET: api/<controller>
+        [EnableCors("AllowOrigin")]
         [HttpGet]
         public IList<SummaryModel> Get(string startRangeBegin, string startRangeEnd, string endRangeBegin, string endRangeEnd)
         {
@@ -48,7 +50,7 @@ namespace MarketingDashboardAPI
             }
             else
             {
-                throw new Exception("123");
+                throw new WrongDateException("Wrong Date");
             }
 
             return models;

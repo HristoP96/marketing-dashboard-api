@@ -16,7 +16,13 @@ namespace MarketingDashboardAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(typeof(WrongDateExceptionHandler));
+            });
+            services.AddCors( c => {
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("http://localhost:4200"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +41,7 @@ namespace MarketingDashboardAPI
             app.UseMvcWithDefaultRoute();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseCors();
         }
     }
 }
